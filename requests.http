@@ -1,0 +1,68 @@
+### Проверка сервера
+GET http://localhost:8080/
+
+### Получить все задачи
+GET http://localhost:8080/tasks
+
+### Получить задачу по id
+GET http://localhost:8080/tasks/1
+
+### Регистрация
+POST http://localhost:8080/auth/register
+Content-Type: application/json
+
+{
+  "login": "artem",
+  "password": "123456"
+}
+
+### Вход
+POST http://localhost:8080/auth/login
+Content-Type: application/json
+
+{
+  "login": "artem",
+  "password": "123456"
+}
+
+### После входа вставь сюда token из ответа
+@token = ВСТАВЬ_ТОКЕН_СЮДА
+
+### Создать задачу
+POST http://localhost:8080/tasks
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "title": "Новая задача",
+  "description": "Проверка POST запроса",
+  "done": false
+}
+
+### Обновить задачу
+PUT http://localhost:8080/tasks/1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "title": "Изучить Ktor",
+  "description": "Задача обновлена",
+  "done": true
+}
+
+### Удалить задачу
+DELETE http://localhost:8080/tasks/2
+Authorization: Bearer {{token}}
+
+### Проверка 401 без токена
+POST http://localhost:8080/tasks
+Content-Type: application/json
+
+{
+  "title": "Без токена",
+  "description": "Должен вернуться 401",
+  "done": false
+}
+
+### Проверка 404
+GET http://localhost:8080/tasks/999
